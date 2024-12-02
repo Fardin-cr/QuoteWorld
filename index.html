@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header Section -->
+    <header>
+      <h1>✨ Welcome to Quote World ✨</h1>
+      <p>Your daily dose of motivation and fun!</p>
+    </header>
+
+    <!-- Quote Generation Controls -->
+    <div class="controls">
+      <label for="quoteType">Pick a Quote Type:</label>
+      <select id="quoteType">
+        <option value="fun">Fun Quotes</option>
+        <option value="motivational">Motivational Quotes</option>
+        <option value="random">Random Quotes</option>
+      </select>
+      <button id="generateBtn">Generate Quote</button>
+    </div>
+
+    <!-- Quote Display -->
+    <div id="quoteDisplay" class="quote-box">
+      <p class="placeholder">Your quote will appear here...</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button id="copyBtn" disabled>📋 Copy to Clipboard</button>
+      <button id="shareBtn" disabled>🌐 Share</button>
+      <button id="anotherBtn" disabled>🔄 Make Another Quote</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
