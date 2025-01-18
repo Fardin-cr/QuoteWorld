@@ -1,168 +1,143 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+// Predefined quote lists with 20+ quotes each
+const quotes = {
+  fun: [
+    "Why don’t scientists trust atoms? Because they make up everything!",
+    "I’m reading a book about anti-gravity. It’s impossible to put down!",
+    "I told my wife she should embrace her mistakes. She gave me a hug.",
+    "What’s orange and sounds like a parrot? A carrot!",
+    "I used to play piano by ear, but now I use my hands.",
+    "Why did the scarecrow win an award? He was outstanding in his field.",
+    "Parallel lines have so much in common. It’s a shame they’ll never meet.",
+    "I once ate a watch. It was time-consuming.",
+    "Why don’t skeletons fight each other? They don’t have the guts.",
+    "I’m on a seafood diet. I see food, and I eat it.",
+    "What do you call fake spaghetti? An impasta.",
+    "I’m terrified of elevators, so I’m going to start taking steps to avoid them.",
+    "Why don’t oysters share their pearls? Because they’re shellfish!",
+    "Why was the math book sad? It had too many problems.",
+    "I used to hate facial hair, but then it grew on me.",
+    "Why did the bicycle fall over? It was two-tired.",
+    "What did one wall say to the other? I’ll meet you at the corner.",
+    "Why are ghosts bad liars? Because you can see right through them.",
+    "I told my computer I needed a break, and now it won’t stop sending me cookies.",
+    "What do you call a bear with no teeth? A gummy bear!"
+  ],
+  motivational: [
+    "Your limitation—it’s only your imagination.",
+    "Push yourself, because no one else is going to do it for you.",
+    "Dream it. Believe it. Build it.",
+    "Hard work beats talent when talent doesn’t work hard.",
+    "Don’t stop when you’re tired. Stop when you’re done.",
+    "It always seems impossible until it’s done.",
+    "Don’t wait for opportunity. Create it.",
+    "Success doesn’t come from what you do occasionally. It comes from what you do consistently.",
+    "Dream bigger. Do bigger.",
+    "The key to success is to focus on goals, not obstacles.",
+    "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.",
+    "Great things never come from comfort zones.",
+    "Don’t wish it were easier; wish you were better.",
+    "Believe you can, and you’re halfway there.",
+    "The only way to do great work is to love what you do.",
+    "Don’t limit your challenges. Challenge your limits.",
+    "Failure is not the opposite of success; it’s part of success.",
+    "Act as if what you do makes a difference. It does.",
+    "It’s not whether you get knocked down; it’s whether you get up.",
+    "Start where you are. Use what you have. Do what you can."
+  ],
+  random: [] // This will combine all quotes dynamically
+};
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
+// Combine all quotes into the "random" category
+quotes.random = [...quotes.fun, ...quotes.motivational];
 
-/* Container */
-.container {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
-  width: 100%;
-  text-align: center;
-}
+// Track already shown quotes for each category
+const shownQuotes = {
+  fun: [],
+  motivational: [],
+  random: []
+};
 
-/* Header */
-h1 {
-  font-size: 2em;
-  color: #4a90e2;
-  margin-bottom: 20px;
-}
+// Elements
+const quoteTypeSelect = document.getElementById('quoteType');
+const generateBtn = document.getElementById('generateBtn');
+const quoteDisplay = document.getElementById('quoteDisplay');
+const copyBtn = document.getElementById('copyBtn');
+const shareBtn = document.getElementById('shareBtn');
 
-h2 {
-  font-size: 1.2em;
-  margin-bottom: 15px;
-  color: #666;
-}
+// State
+let currentQuote = "";
 
-/* Dropdown */
-select {
-  padding: 10px;
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 20px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+// Function to generate a quote based on selected type
+const generateQuote = (type) => {
+  const selectedQuotes = quotes[type];
+  const alreadyShown = shownQuotes[type];
 
-/* Buttons */
-button {
-  padding: 10px 20px;
-  margin: 10px 5px;
-  font-size: 1em;
-  color: #fff;
-  background-color: #4a90e2;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-button:hover {
-  background-color: #357ab8;
-}
-
-/* Quote Display */
-#quoteDisplay {
-  font-size: 1.2em;
-  font-style: italic;
-  margin: 20px 0;
-  padding: 10px;
-  border: 1px dashed #ccc;
-  border-radius: 5px;
-  background: #f9f9f9;
-  color: #555;
-}
-
-/* Modal Styling */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-}
-
-.share-buttons a {
-  display: inline-block;
-  margin: 10px;
-  text-decoration: none;
-  color: #333;
-  font-size: 1.2em;
-  transition: color 0.3s ease;
-}
-
-.share-buttons i {
-  margin-right: 8px;
-  font-size: 1.5em;
-  color: #4a90e2;
-}
-
-.share-buttons a:hover i {
-  color: #357ab8;
-}
-
-.share-buttons a:hover {
-  color: #357ab8;
-}
-
-/* Close Button */
-.modal-content button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1em;
-  color: #fff;
-  background-color: #e74c3c;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.modal-content button:hover {
-  background-color: #c0392b;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.8em;
+  // Reset shown quotes if all have been displayed
+  if (alreadyShown.length === selectedQuotes.length) {
+    shownQuotes[type] = [];
   }
 
-  button {
-    width: 100%;
-  }
+  // Find a new quote that hasn't been shown yet
+  let newQuote;
+  do {
+    newQuote = selectedQuotes[Math.floor(Math.random() * selectedQuotes.length)];
+  } while (alreadyShown.includes(newQuote));
 
-  select {
-    width: 100%;
-  }
-}
+  // Add the quote to the "already shown" list
+  alreadyShown.push(newQuote);
+
+  // Display the quote
+  currentQuote = newQuote;
+  quoteDisplay.textContent = currentQuote;
+
+  // Enable buttons
+  copyBtn.disabled = false;
+  shareBtn.disabled = false;
+
+  // Update button text to "Make Another Quote"
+  generateBtn.textContent = "Make Another Quote";
+};
+
+// Generate a quote when the button is clicked
+generateBtn.addEventListener('click', () => {
+  const quoteType = quoteTypeSelect.value || "random";
+  generateQuote(quoteType);
+});
+
+// Copy quote to clipboard
+copyBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(currentQuote).then(() => {
+    alert('Quote copied to clipboard!');
+  });
+});
+
+// Simulate sharing options
+shareBtn.addEventListener('click', () => {
+  const shareOptions = `
+    <div id="shareModal" class="modal">
+      <div class="modal-content">
+        <h2>Share Your Quote</h2>
+        <div class="share-buttons">
+          <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(currentQuote)}" target="_blank" class="share-link">
+            <i class="fab fa-twitter"></i> Share on X
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentQuote)}" target="_blank" class="share-link">
+            <i class="fab fa-facebook-f"></i> Share on Facebook
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" class="share-link">
+            <i class="fab fa-instagram"></i> Share on Instagram
+          </a>
+        </div>
+        <button onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  `;
+
+  // Append the modal to the body
+  document.body.insertAdjacentHTML('beforeend', shareOptions);
+
+  // Close the modal on button click
+  window.closeModal = () => {
+    document.getElementById('shareModal').remove();
+  };
+});
